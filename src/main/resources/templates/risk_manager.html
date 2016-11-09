@@ -9,7 +9,7 @@
     <script src="/js/jquery-ui.js"></script>
 </head>
 <body>
-<div class="container-fluid">
+<div id="main" class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <h2 class="text-center">
@@ -73,53 +73,53 @@
                 <label for="title">
                     标题
                 </label>
-                <input type="text" class="form-control" id="title" model="curRisk.title" />
+                <input type="text" class="form-control" id="title" v-model="curRisk.title" />
             </div>
             <div class="form-group">
                 <label for="description">
                     描述
                 </label>
-                <textarea type="text" class="form-control" id="description" model="curRisk.description"></textarea>
+                <textarea type="text" class="form-control" id="description" v-model="curRisk.description"></textarea>
             </div>
             <div class="form-group">
                 <label for="level">
                     风险影响程度等级
                 </label>
-                <input type="text" class="form-control" id="level" model="curRisk.level"/>
+                <input type="text" class="form-control" id="level" v-model="curRisk.level"/>
             </div>
             <div class="form-group">
                 <label for="possibility">
                     可能性
                 </label>
-                <input type="text" class="form-control" id="possibility" model="curRisk.possibility"/>
+                <input type="text" class="form-control" id="possibility" v-model="curRisk.possibility"/>
             </div>
             <div class="form-group">
                 <label for="state">
                     风险状态
                 </label>
-                <input type="text" class="form-control" id="state" model="curRisk.state"/>
+                <input type="text" class="form-control" id="state" v-model="curRisk.state"/>
             </div>
             <div class="form-group">
                 <label for="submitter_id">
                     提交者id
                 </label>
-                <input type="text" class="form-control" id="submitter_id" model="curRisk.submitter_id" disabled/>
+                <input type="text" class="form-control" id="submitter_id" v-model="curRisk.submitter_id" disabled="disabled"/>
             </div>
             <div class="form-group">
                 <label for="tracker_id">
                     跟踪者id
                 </label>
-                <input type="text" class="form-control" id="tracker_id" model="curRisk.tracker_id"/>
+                <input type="text" class="form-control" id="tracker_id" v-model="curRisk.tracker_id"/>
             </div>
             <div class="form-group">
                 <label for="threshold">
                     阈值
                 </label>
-                <input type="text" class="form-control" id="threshold" model="curRisk.threshold"/>
+                <input type="text" class="form-control" id="threshold" v-model="curRisk.threshold"/>
             </div>
             <div class="form-group">
                 <span v-for="cause in allCauses">
-                     <input type="checkbox" id="cause.name" value="cause.name" v-model="causes">
+                     <input type="checkbox" id="cause.name" value="cause.name" v-model="causes"/>
                 <label for="cause.name">{{cause.name}}</label>
                 </span>
             </div>
@@ -138,7 +138,7 @@
 </script>
 <script>
     var vue=new Vue({
-        el:"#container-fluid",
+        el:"#main",
         data:{
             user:user,
            riskList:riskList,
@@ -182,7 +182,7 @@
         width:400,
         modal: true,
         buttons: {
-            "修改": function () {
+            "确定": function () {
                 this.$http.post('/risk/modify',{risk:vue.curRisk,causes:vue.causes},{emulateJSON:true}).then(function (response) {
                     $(this).dialog("close");
                     window.location.reload();

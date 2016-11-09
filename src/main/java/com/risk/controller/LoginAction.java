@@ -40,7 +40,7 @@ public class LoginAction {
     public Map loginCheck(ModelAndView mv, String account, String password){
         HashMap<String,String> result=new HashMap<>();
         UserBean userBean=userDao.findByAccount(account);
-        if(userBean!=null){
+        if(userBean.getPassword().equals(password)){
             result.put("result","success");
         }else {
             result.put("result","fail");
@@ -51,6 +51,7 @@ public class LoginAction {
     @RequestMapping("toMain")
     private ModelAndView toMain(ModelAndView mv,String account,String password){
         UserBean userBean=userDao.findByAccount(account);
+        System.out.println(userBean.getAccount());
         switch (userBean.getRole()){
             case 0:
                 //admin

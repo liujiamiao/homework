@@ -7,7 +7,7 @@
 </head>
 <body>
 <div th:text="${message}"></div>
-<div class="container-fluid">
+<div id="main" class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="row">
@@ -16,18 +16,18 @@
                 <div class="col-md-4">
                     <form id="form" role="form" action="/toMain" method="post">
                         <div class="form-group">
-                            <label for="exampleInputAccount">
+                            <label for="account">
                                 用户名
                             </label>
-                            <input type="text" class="form-control" id="exampleInputAccount" model="account" />
+                            <input type="text" class="form-control" name="account" id="account" v-model="account" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">
+                            <label for="password">
                                 密码
                             </label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" model="password"/>
+                            <input type="password" class="form-control" name="password" id="password" v-model="password"/>
                         </div>
-                        <button class="btn btn-success btn-default" v-on:click="loginCheck">
+                        <button type="button" class="btn btn-success btn-default" v-on:click="loginCheck">
                             登录
                         </button>
                     </form>
@@ -44,13 +44,14 @@
 <script src="/js/jquery-3.1.1.js"></script>
 <script>
     var vue=new Vue({
-        el:"#container-fluid",
+        el:"#main",
         data:{
             account:'',
             password:''
         },
         methods:{
             loginCheck:function () {
+                console.log(this.account);
                 this.$http.post("/loginCheck",{account:this.account,password:this.password},{emulateJSON:true}).then(function (response) {
                     var result=response.data.result;
                     if(result=='success'){
