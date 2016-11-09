@@ -56,13 +56,13 @@ public class LoginAction {
                 //admin
                 break;
             case 1:
-                //control manager
-                mv.setViewName("control_manager");
-                break;
-            case 2:
                 //risk manager
                 mv.setViewName("risk_manager");
                 mv.addObject("riskList", ArrayUtil.toList(riskDao.findAll().iterator()));
+                break;
+            case 2:
+                //control manager
+                mv.setViewName("control_manager");
                 break;
         }
         mv.addObject("user",userBean);

@@ -39,9 +39,9 @@
     </div>
 </div>
 </body>
-<script src="/static/js/vue.js"></script>
-<script src="/static/js/vue-resource.min.js"></script>
-<script src="/static/js/jquery-3.1.1.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/vue-resource.min.js"></script>
+<script src="/js/jquery-3.1.1.js"></script>
 <script>
     var vue=new Vue({
         el:"#container-fluid",
@@ -54,6 +54,7 @@
                 this.$http.post("/loginCheck",{account:this.account,password:this.password},{emulateJSON:true}).then(function (response) {
                     var result=response.data.result;
                     if(result=='success'){
+                        alert("success");
                        $("#form").submit();
                     }else{
                         alert("用户名或密码错误！");
