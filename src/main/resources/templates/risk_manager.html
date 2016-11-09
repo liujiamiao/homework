@@ -119,8 +119,8 @@
             </div>
             <div class="form-group">
                 <span v-for="cause in allCauses">
-                     <input type="checkbox" id="cause.name" value="cause.name" v-model="causes"/>
-                <label for="cause.name">{{cause.name}}</label>
+                     <input type="checkbox" :id="cause" :value="cause" v-model="causes"/>
+                <label :for="cause">{{cause}}</label>
                 </span>
             </div>
 
@@ -156,8 +156,8 @@
                 this.curRisk=risk;
                 this.$http.post('/risk/getCauses',{id:risk.id},{emulateJSON:true}).then(function (response) {
                     this.causes=response.data.causes;
+                    $("#dialog").dialog("open");
                 });
-                $("#dialog").dialog("open");
             },
             addRisk:function () {
                 this.curRisk={
@@ -177,15 +177,19 @@
     });
 
     $("#dialog").dialog({
+        autoOpen: false,
         resizable: false,
         height:350,
         width:400,
         modal: true,
         buttons: {
             "确定": function () {
-                this.$http.post('/risk/modify',{risk:vue.curRisk,causes:vue.causes},{emulateJSON:true}).then(function (response) {
-                    $(this).dialog("close");
-                    window.location.reload();
+                vue.curRisk['submitter_id']=user.id;
+                vue.$http.post('/risk/modify',vue.curRisk,{emulateJSON:true}).then(function (response) {
+                    vue.$http.post('/risk/addCauses',{riskId:vue.curRisk.id,causes:vue.causes},{emulateJSON:true});
+                    $("#dialog").dialog("close");
+                    vue.causes=[];
+//                    window.location.reload();
                 });
             },
             "取消": function () {

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class CauseBean {
     @Id
     private long id;
-    private long riskId;
+    private long risk_id;
     private String name;
     private String description;
 
@@ -41,11 +41,11 @@ public class CauseBean {
         this.id = id;
     }
 
-    public long getRiskId() {
-        return riskId;
+    public long getRisk_id() {
+        return risk_id;
     }
 
-    public void setRiskId(long riskId) {
-        this.riskId = riskId;
+    public void setRisk_id(long risk_id) {
+        this.risk_id = risk_id;
     }
 }
