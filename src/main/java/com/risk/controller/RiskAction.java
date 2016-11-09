@@ -31,7 +31,7 @@ public class RiskAction {
     @ResponseBody
     public Map getCauses(Long id) {
         HashMap result = new HashMap();
-        result.put("causes", ArrayUtil.toList(causeDao.findByRiskId(id).iterator()));
+        result.put("causes", ArrayUtil.toList(causeDao.findByriskId(id).iterator()));
         return result;
     }
 

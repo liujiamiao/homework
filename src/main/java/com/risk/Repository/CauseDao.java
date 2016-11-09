@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
  * Created by mcs on 2016/11/9.
  */
 public interface CauseDao extends CrudRepository<CauseBean,Long> {
-    Iterable<CauseBean> findByRiskId (Long risk_id);
+    Iterable<CauseBean> findByriskId (Long riskId);
 }

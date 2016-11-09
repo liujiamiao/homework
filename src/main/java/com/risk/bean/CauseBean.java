@@ -10,17 +10,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cause")
 public class CauseBean {
-    private long risk_id;
+    @Id
+    private long id;
+    private long riskId;
     private String name;
     private String description;
 
-    public long getRisk_id() {
-        return risk_id;
-    }
-
-    public void setRisk_id(long risk_id) {
-        this.risk_id = risk_id;
-    }
 
     public String getName() {
         return name;
@@ -36,5 +31,21 @@ public class CauseBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getRiskId() {
+        return riskId;
+    }
+
+    public void setRiskId(long riskId) {
+        this.riskId = riskId;
     }
 }
