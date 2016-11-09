@@ -1,12 +1,23 @@
 package com.risk.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by meow on 2016/11/9.
  */
+@Entity
+@Table(name = "user")
 public class UserBean {
+    @Id
     private long id;
     private String account;
     private String password;
+
+    /**
+     * 0：admin;1:control manager;2:riskManager
+     */
     private int role;
 
     public long getId() {

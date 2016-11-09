@@ -1,9 +1,17 @@
 package com.risk.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by meow on 2016/11/9.
  */
+
+@Entity
+@Table(name = "control_points")
 public class ControlPointBean {
+    @Id
     private long control_id;
     private String control_point;
     private long risk_id;

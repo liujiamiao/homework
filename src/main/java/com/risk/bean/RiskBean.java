@@ -1,9 +1,16 @@
 package com.risk.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by meow on 2016/11/9.
  */
+@Entity
+@Table(name = "risks")
 public class RiskBean {
+    @Id
     private long id;
     private String title;
     private String description;

@@ -1,8 +1,14 @@
 package com.risk.bean;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by meow on 2016/11/9.
  */
+@Entity
+@Table(name = "cause")
 public class CauseBean {
     private long risk_id;
     private String name;
