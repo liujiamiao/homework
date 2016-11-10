@@ -51,16 +51,14 @@ public class RiskAction {
         riskDao.save(risk);
     }
 
-    @RequestMapping("/addCauses")
+    @RequestMapping("/addCause")
     @ResponseBody
-    public void addCauses(@RequestParam(value = "riskId") Integer riskId,@RequestParam(value = "causes[]") ArrayList<String> causes){
-        for(String name:causes){
+    public void addCause(@RequestParam(value = "riskId") Integer riskId,String cause){
             CauseBean causeBean=new CauseBean();
-            System.out.println(name);
-            causeBean.setName(name);
+            System.out.println(cause);
+            causeBean.setName(cause);
             causeBean.setRisk_id(riskId);
             causeBean.setDescription(null);
             causeDao.save(causeBean);
-        }
     }
 }

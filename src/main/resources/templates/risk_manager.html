@@ -15,7 +15,7 @@
             <h2 class="text-center">
                 risk management
             </h2>
-            <div class="col-lg-offset-3">
+            <div>
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -68,12 +68,13 @@
     </div>
 
     <div id="dialog" title="风险详情">
-        <form v-if="curRisk!=''" :class="{disable:user.id==curRisk.submitter_id}" id="form" role="form" action="/risk/editRisk" method="post">
+        <form v-if="curRisk!=''" :class="{disable:user.id==curRisk.submitter_id}" id="form" role="form"
+              action="/risk/editRisk" method="post">
             <div class="form-group">
                 <label for="title">
                     标题
                 </label>
-                <input type="text" class="form-control" id="title" v-model="curRisk.title" />
+                <input type="text" class="form-control" id="title" v-model="curRisk.title"/>
             </div>
             <div class="form-group">
                 <label for="description">
@@ -103,7 +104,8 @@
                 <label for="submitter_id">
                     提交者id
                 </label>
-                <input type="text" class="form-control" id="submitter_id" v-model="curRisk.submitter_id" disabled="disabled"/>
+                <input type="text" class="form-control" id="submitter_id" v-model="curRisk.submitter_id"
+                       disabled="disabled"/>
             </div>
             <div class="form-group">
                 <label for="tracker_id">
@@ -136,66 +138,5 @@
     var riskList = [[${riskList}]];
     var user = [[${user}]];
 </script>
-<script>
-    var vue=new Vue({
-        el:"#main",
-        data:{
-            user:user,
-           riskList:riskList,
-            causes:[],
-            allCauses:[],
-            curRisk:''
-        },
-        mounted:function(){
-                this.$http.post('/risk/getAllCauses',{emulateJSON:true}).then(function (response) {
-                    this.allCauses=response.data.causes;
-            });
-        },
-        methods:{
-            showRisk:function (risk) {
-                this.curRisk=risk;
-                this.$http.post('/risk/getCauses',{id:risk.id},{emulateJSON:true}).then(function (response) {
-                    this.causes=response.data.causes;
-                    $("#dialog").dialog("open");
-                });
-            },
-            addRisk:function () {
-                this.curRisk={
-                    title:'',
-                    description:'',
-                    level:'',
-                    possibility:'',
-                    state:'',
-                    submitter_id:'',
-                    tracker_id:'',
-                    threshold:''
-                };
-                this.causes=[];
-                $("#dialog").dialog("open");
-            }
-        }
-    });
-
-    $("#dialog").dialog({
-        autoOpen: false,
-        resizable: false,
-        height:350,
-        width:400,
-        modal: true,
-        buttons: {
-            "确定": function () {
-                vue.curRisk['submitter_id']=user.id;
-                vue.$http.post('/risk/modify',vue.curRisk,{emulateJSON:true}).then(function (response) {
-                    vue.$http.post('/risk/addCauses',{riskId:vue.curRisk.id,causes:vue.causes},{emulateJSON:true});
-                    $("#dialog").dialog("close");
-                    vue.causes=[];
-//                    window.location.reload();
-                });
-            },
-            "取消": function () {
-                $(this).dialog("close");
-            }
-        }
-    })
-</script>
+<script src="/js/risk_manager.js"></script>
 </html>
