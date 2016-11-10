@@ -20,10 +20,16 @@ var vue = new Vue({
             this.curRisk = risk;
             this.$http.post('/risk/getCauses', {id: risk.id}, {emulateJSON: true}).then(function (response) {
                 this.causes = response.data.causes;
+                if (user.id == risk.submitter_id) {
+                    $(".info").removeAttr("disabled");
+                } else {
+                    $(".info").attr("disabled", "disabled");
+                }
                 $("#dialog").dialog("open");
             });
         },
         addRisk: function () {
+            $(".info").removeAttr("disabled");
             this.curRisk = {
                 title: '',
                 description: '',
@@ -36,6 +42,16 @@ var vue = new Vue({
             };
             this.causes = [];
             $("#dialog").dialog("open");
+        },
+        formatData:function (time) {
+            console.log(time);
+            var date=new Date(time);
+            console.log(date);
+            var result=date.getFullYear()+"/"+((date.getMonth()+1)>9?(date.getMonth()+1):("0"+(date.getMonth()+1)))+"/"+(date.getDate()>9?date.getDate():("0"+date.getDate()))+" "+
+                (date.getHours()>9?date.getHours():("0"+date.getHours()))+
+            ":"+(date.getMinutes()>9?date.getMinutes():("0"+date.getMinutes()))+":"+(date.getSeconds()>9?date.getSeconds():("0"+date.getSeconds()));
+            console.log(result);
+            return result;
         }
     }
 });
@@ -53,16 +69,16 @@ $("#dialog").dialog({
                 for (var i = 0; i < vue.causes.length; i++) {
                     vue.$http.post('/risk/addCause', {
                         riskId: vue.curRisk.id,
-                        cause:vue.causes[i]
+                        cause: vue.causes[i]
                     }, {emulateJSON: true});
                 }
                 $("#dialog").dialog("close");
                 vue.causes = [];
-//                    window.location.reload();
+                window.location.reload();
             });
         },
         "取消": function () {
             $(this).dialog("close");
         }
     }
-})
+});

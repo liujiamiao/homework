@@ -15,7 +15,7 @@
             <h2 class="text-center">
                 risk management
             </h2>
-            <div>
+            <div class="col-md-10 col-md-offset-1">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -54,7 +54,7 @@
                             {{risk.state}}
                         </td>
                         <td>
-                            {{risk.timestamp}}
+                            {{formatData(risk.timestamp)}}
                         </td>
                         <td>
                             {{risk.threshold}}
@@ -68,60 +68,60 @@
     </div>
 
     <div id="dialog" title="风险详情">
-        <form v-if="curRisk!=''" :class="{disable:user.id==curRisk.submitter_id}" id="form" role="form"
+        <form v-if="curRisk!=''" id="form" role="form"
               action="/risk/editRisk" method="post">
             <div class="form-group">
                 <label for="title">
                     标题
                 </label>
-                <input type="text" class="form-control" id="title" v-model="curRisk.title"/>
+                <input type="text" class="form-control info" id="title" v-model="curRisk.title"/>
             </div>
             <div class="form-group">
                 <label for="description">
                     描述
                 </label>
-                <textarea type="text" class="form-control" id="description" v-model="curRisk.description"></textarea>
+                <textarea type="text" class="form-control info" id="description" v-model="curRisk.description"></textarea>
             </div>
             <div class="form-group">
                 <label for="level">
                     风险影响程度等级
                 </label>
-                <input type="text" class="form-control" id="level" v-model="curRisk.level"/>
+                <input type="text" class="form-control info" id="level" v-model="curRisk.level"/>
             </div>
             <div class="form-group">
                 <label for="possibility">
                     可能性
                 </label>
-                <input type="text" class="form-control" id="possibility" v-model="curRisk.possibility"/>
+                <input type="text" class="form-control info" id="possibility" v-model="curRisk.possibility"/>
             </div>
             <div class="form-group">
                 <label for="state">
                     风险状态
                 </label>
-                <input type="text" class="form-control" id="state" v-model="curRisk.state"/>
+                <input type="text" class="form-control info" id="state" v-model="curRisk.state"/>
             </div>
             <div class="form-group">
                 <label for="submitter_id">
                     提交者id
                 </label>
-                <input type="text" class="form-control" id="submitter_id" v-model="curRisk.submitter_id"
+                <input type="text" class="form-control info" id="submitter_id" v-model="curRisk.submitter_id"
                        disabled="disabled"/>
             </div>
             <div class="form-group">
                 <label for="tracker_id">
                     跟踪者id
                 </label>
-                <input type="text" class="form-control" id="tracker_id" v-model="curRisk.tracker_id"/>
+                <input type="text" class="form-control info" id="tracker_id" v-model="curRisk.tracker_id"/>
             </div>
             <div class="form-group">
                 <label for="threshold">
                     阈值
                 </label>
-                <input type="text" class="form-control" id="threshold" v-model="curRisk.threshold"/>
+                <input type="text" class="form-control info" id="threshold" v-model="curRisk.threshold"/>
             </div>
             <div class="form-group">
                 <span v-for="cause in allCauses">
-                     <input type="checkbox" :id="cause" :value="cause" v-model="causes"/>
+                     <input type="checkbox" class="info" :id="cause" :value="cause" v-model="causes"/>
                 <label :for="cause">{{cause}}</label>
                 </span>
             </div>
