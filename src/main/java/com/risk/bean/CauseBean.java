@@ -1,8 +1,6 @@
 package com.risk.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by meow on 2016/11/9.
@@ -11,6 +9,7 @@ import javax.persistence.Table;
 @Table(name = "cause")
 public class CauseBean {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long risk_id;
     private String name;

@@ -1,8 +1,6 @@
 package com.risk.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by meow on 2016/11/9.
@@ -12,16 +10,17 @@ import javax.persistence.Table;
 @Table(name = "control_points")
 public class ControlPointBean {
     @Id
-    private long control_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long controlId;
+    private long ownerId;
     private String control_point;
-    private long risk_id;
 
-    public long getControl_id() {
-        return control_id;
+    public long getControlId() {
+        return controlId;
     }
 
-    public void setControl_id(long control_id) {
-        this.control_id = control_id;
+    public void setControlId(long controlId) {
+        this.controlId = controlId;
     }
 
     public String getControl_point() {
@@ -32,11 +31,11 @@ public class ControlPointBean {
         this.control_point = control_point;
     }
 
-    public long getRisk_id() {
-        return risk_id;
+    public long getOwnerId() {
+        return ownerId;
     }
 
-    public void setRisk_id(long risk_id) {
-        this.risk_id = risk_id;
+    public void setOwnerId(long ownerId) {
+        this.ownerId = ownerId;
     }
 }

@@ -1,9 +1,6 @@
 package com.risk.bean;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by meow on 2016/11/9.
@@ -12,25 +9,25 @@ import javax.persistence.Table;
 @Table(name = "risks")
 public class RiskBean {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
+
     private String title;
     private String description;
     private int level;
     private int possibility;
     private long submitter_id;
-    private long tracker_id;
+    private long controlId;
     private int state;
     private long timestamp;
     private int threshold;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -72,12 +69,12 @@ public class RiskBean {
         this.submitter_id = submitter_id;
     }
 
-    public long getTracker_id() {
-        return tracker_id;
+    public long getControlId() {
+        return controlId;
     }
 
-    public void setTracker_id(long tracker_id) {
-        this.tracker_id = tracker_id;
+    public void setControlId(long controlId) {
+        this.controlId = controlId;
     }
 
     public int getState() {

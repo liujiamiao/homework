@@ -1,8 +1,10 @@
 package com.risk.controller;
 
 import com.risk.Repository.CauseDao;
+import com.risk.Repository.ControlPointDao;
 import com.risk.Repository.RiskDao;
 import com.risk.bean.CauseBean;
+import com.risk.bean.ControlPointBean;
 import com.risk.bean.RiskBean;
 import com.risk.util.ArrayUtil;
 import org.hibernate.Hibernate;
@@ -28,11 +30,22 @@ public class RiskAction {
     @Autowired
     RiskDao riskDao;
 
+    @Autowired
+    ControlPointDao controlPointDao;
+
     @RequestMapping("/getCauses")
     @ResponseBody
     public Map getCauses(Long id) {
         HashMap result = new HashMap();
         result.put("causes", ArrayUtil.toList(causeDao.findByRiskId(id).iterator()));
+        return result;
+    }
+
+    @RequestMapping("/getAllControls")
+    @ResponseBody
+    public Map getAllControls() {
+        HashMap result = new HashMap();
+        result.put("controls", ArrayUtil.toList(controlPointDao.findAll().iterator()));
         return result;
     }
 
@@ -60,5 +73,12 @@ public class RiskAction {
             causeBean.setRisk_id(riskId);
             causeBean.setDescription(null);
             causeDao.save(causeBean);
+    }
+    @RequestMapping("/check")
+    @ResponseBody
+    public void check(Long id){
+        RiskBean riskBean=riskDao.findOne(id);
+        riskBean.setState(1);
+        riskDao.save(riskBean);
     }
 }

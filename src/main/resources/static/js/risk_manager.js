@@ -7,26 +7,33 @@ var vue = new Vue({
         user: user,
         riskList: riskList,
         causes: [],
+        controls:[],
         allCauses: [],
-        curRisk: ''
+        curRisk: '',
+        isCheck:false
     },
     mounted: function () {
         this.$http.post('/risk/getAllCauses', {emulateJSON: true}).then(function (response) {
             this.allCauses = response.data.causes;
         });
+        this.$http.post('/risk/getAllControls', {emulateJSON: true}).then(function (response) {
+            this.controls = response.data.controls;
+        });
     },
     methods: {
         showRisk: function (risk) {
-            this.curRisk = risk;
-            this.$http.post('/risk/getCauses', {id: risk.id}, {emulateJSON: true}).then(function (response) {
-                this.causes = response.data.causes;
-                if (user.id == risk.submitter_id) {
-                    $(".info").removeAttr("disabled");
-                } else {
-                    $(".info").attr("disabled", "disabled");
-                }
-                $("#dialog").dialog("open");
-            });
+            if(!this.isCheck){
+                this.curRisk = risk;
+                this.$http.post('/risk/getCauses', {id: risk.id}, {emulateJSON: true}).then(function (response) {
+                    this.causes = response.data.causes;
+                    if (user.id == risk.submitter_id) {
+                        $(".info").removeAttr("disabled");
+                    } else {
+                        $(".info").attr("disabled", "disabled");
+                    }
+                    $("#dialog").dialog("open");
+                });
+            }
         },
         addRisk: function () {
             $(".info").removeAttr("disabled");
@@ -35,9 +42,9 @@ var vue = new Vue({
                 description: '',
                 level: '',
                 possibility: '',
-                state: '',
+                state: 0,
                 submitter_id: '',
-                tracker_id: '',
+                controlId: '',
                 threshold: ''
             };
             this.causes = [];
@@ -52,6 +59,23 @@ var vue = new Vue({
             ":"+(date.getMinutes()>9?date.getMinutes():("0"+date.getMinutes()))+":"+(date.getSeconds()>9?date.getSeconds():("0"+date.getSeconds()));
             console.log(result);
             return result;
+        },
+        check:function (risk,event) {
+            this.isCheck=true;
+            this.$http.post('/risk/check', {id: risk.id}, {emulateJSON: true}).then(function (response) {
+                this.riskList[this.riskList.indexOf(risk)].state=1;
+                this.isCheck=false;
+            });
+        },
+        shouldShowCheck:function (risk) {
+            for(var i=0;i<this.controls.length;i++){
+                if(risk.controlId==this.controls[i].controlId){
+                    if(this.controls[i].ownerId=user.id){
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 });

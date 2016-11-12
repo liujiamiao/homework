@@ -32,10 +32,16 @@
                             风险状态
                         </th>
                         <th>
+                            阈值
+                        </th>
+                        <th>
+                            风险状况
+                        </th>
+                        <th>
                             提交时间
                         </th>
                         <th>
-                            阈值
+                            操作
                         </th>
                     </tr>
                     </thead>
@@ -51,13 +57,19 @@
                             {{risk.possibility}}
                         </td>
                         <td>
-                            {{risk.state}}
+                            {{risk.state==1?'已评估':'未评估'}}
                         </td>
+                        <td>
+                            {{risk.threshold}}
+                        </td>
+                        <td v-text="risk.level*risk.possibility>risk.threshold?'有风险':'无风险'"></td>
                         <td>
                             {{formatData(risk.timestamp)}}
                         </td>
                         <td>
-                            {{risk.threshold}}
+                            <button v-if="shouldShowCheck(risk)"
+                                    class="btn btn-default btn-sm" type="button" v-on:click="check(risk,event)">评估
+                            </button>
                         </td>
                     </tr>
                     </tbody>
@@ -80,7 +92,8 @@
                 <label for="description">
                     描述
                 </label>
-                <textarea type="text" class="form-control info" id="description" v-model="curRisk.description"></textarea>
+                <textarea type="text" class="form-control info" id="description"
+                          v-model="curRisk.description"></textarea>
             </div>
             <div class="form-group">
                 <label for="level">
@@ -98,20 +111,23 @@
                 <label for="state">
                     风险状态
                 </label>
-                <input type="text" class="form-control info" id="state" v-model="curRisk.state"/>
+                <input type="text" class="form-control" id="state" :value="curRisk.state==1?'已评估':'未评估'"
+                       disabled="disabled"/>
             </div>
             <div class="form-group">
                 <label for="submitter_id">
                     提交者id
                 </label>
-                <input type="text" class="form-control info" id="submitter_id" v-model="curRisk.submitter_id"
+                <input type="text" class="form-control" id="submitter_id" v-model="curRisk.submitter_id"
                        disabled="disabled"/>
             </div>
             <div class="form-group">
-                <label for="tracker_id">
-                    跟踪者id
+                <label for="controlId">
+                    控制点
                 </label>
-                <input type="text" class="form-control info" id="tracker_id" v-model="curRisk.tracker_id"/>
+                <select v-model="curRisk.controlId" class="form-control info" id="controlId">
+                    <option v-for="control in controls" :value="control.controlId">{{control.control_point}}</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="threshold">
