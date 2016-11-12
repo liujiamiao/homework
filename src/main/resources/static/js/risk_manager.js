@@ -60,7 +60,7 @@ var vue = new Vue({
             console.log(result);
             return result;
         },
-        check:function (risk,event) {
+        check:function (risk) {
             this.isCheck=true;
             this.$http.post('/risk/check', {id: risk.id}, {emulateJSON: true}).then(function (response) {
                 this.riskList[this.riskList.indexOf(risk)].state=1;
