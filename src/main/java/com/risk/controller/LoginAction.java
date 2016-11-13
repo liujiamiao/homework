@@ -1,5 +1,6 @@
 package com.risk.controller;
 
+import com.risk.Repository.ControlPointDao;
 import com.risk.Repository.RiskDao;
 import com.risk.Repository.UserDao;
 import com.risk.bean.UserBean;
@@ -27,6 +28,9 @@ public class LoginAction {
 
     @Autowired
     RiskDao riskDao;
+
+    @Autowired
+    ControlPointDao controlPointDao;
 
     @RequestMapping("/")
     private ModelAndView toLogin(ModelAndView mv){
@@ -64,6 +68,8 @@ public class LoginAction {
             case 2:
                 //control manager
                 mv.setViewName("control_manager");
+                mv.addObject("controlList",ArrayUtil.toList(controlPointDao.findByOwnerId(userBean.getId()).iterator()));
+                mv.addObject("riskList", ArrayUtil.toList(riskDao.findByOwnerId(userBean.getId()).iterator()));
                 break;
         }
         mv.addObject("user",userBean);

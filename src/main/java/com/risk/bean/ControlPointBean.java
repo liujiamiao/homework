@@ -1,6 +1,7 @@
 package com.risk.bean;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by meow on 2016/11/9.
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "control_points")
-public class ControlPointBean {
+public class ControlPointBean{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long controlId;

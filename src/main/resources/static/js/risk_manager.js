@@ -28,7 +28,9 @@ var vue = new Vue({
                     this.causes = response.data.causes;
                     if (user.id == risk.submitter_id) {
                         $(".info").removeAttr("disabled");
-                    } else {
+                    } else if (user.role == 2){
+                        $(".info").remove("disabled");
+                    }else {
                         $(".info").attr("disabled", "disabled");
                     }
                     $("#dialog").dialog("open");

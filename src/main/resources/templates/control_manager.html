@@ -4,7 +4,154 @@
     <meta charset="UTF-8"/>
     <title>控制点管理</title><!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/js/jquery-ui.css"/>
+    <script src="/js/jquery-3.1.1.js"></script>
+    <script src="/js/jquery-ui.js"></script>
 </head>
 <body>
+
+<div id="main" class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="text-center">
+                risk assessment
+            </h2>
+            <div class="col-md-10 col-md-offset-1">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            标题
+                        </th>
+                        <th>
+                            风险影响程度等级
+                        </th>
+                        <th>
+                            可能性
+                        </th>
+                        <th>
+                            风险状态
+                        </th>
+                        <th>
+                            阈值
+                        </th>
+                        <th>
+                            风险状况
+                        </th>
+                        <th>
+                            提交时间
+                        </th>
+                        <th>
+                            控制点ID
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="risk in riskList" v-on:click="showRisk(risk)">
+                        <td>
+                            {{risk.title}}
+                        </td>
+                        <td>
+                            {{risk.level}}
+                        </td>
+                        <td>
+                            {{risk.possibility}}
+                        </td>
+                        <td>
+                            {{risk.state==1?'已评估':'未评估'}}
+                        </td>
+                        <td>
+                            {{risk.threshold}}
+                        </td>
+                        <td v-text="risk.level*risk.possibility>risk.threshold?'有风险':'无风险'"></td>
+                        <td>
+                            {{formatData(risk.timestamp)}}
+                        </td>
+                        <td>
+                            {{risk.controlId}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--<button class="btn btn-default" v-on:click="addRisk">新增风险</button>-->
+            </div>
+        </div>
+    </div>
+
+    <div id="dialog" title="风险详情">
+        <form v-if="curRisk!=''" id="form" role="form"
+              action="/risk/editRisk" method="post">
+            <div class="form-group">
+                <label for="title">
+                    标题
+                </label>
+                <input type="text" class="form-control info" id="title" v-model="curRisk.title"/>
+            </div>
+            <div class="form-group">
+                <label for="description">
+                    描述
+                </label>
+                <textarea type="text" class="form-control info" id="description"
+                          v-model="curRisk.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="level">
+                    风险影响程度等级
+                </label>
+                <input type="text" class="form-control info" id="level" v-model="curRisk.level"/>
+            </div>
+            <div class="form-group">
+                <label for="possibility">
+                    可能性
+                </label>
+                <input type="text" class="form-control info" id="possibility" v-model="curRisk.possibility"/>
+            </div>
+            <div class="form-group">
+                <label for="state">
+                    风险状态
+                </label>
+                <input type="text" class="form-control" id="state" :value="curRisk.state==1?'已评估':'未评估'"
+                       disabled="disabled"/>
+            </div>
+            <div class="form-group">
+                <label for="submitter_id">
+                    提交者id
+                </label>
+                <input type="text" class="form-control" id="submitter_id" v-model="curRisk.submitter_id"
+                       disabled="disabled"/>
+            </div>
+            <div class="form-group">
+                <label for="controlId">
+                    控制点
+                </label>
+                <select v-model="curRisk.controlId" class="form-control info" id="controlId" disabled="disabled">
+                    <option v-for="control in controls" :value="control.controlId">{{control.control_point}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="threshold">
+                    阈值
+                </label>
+                <input type="text" class="form-control info" id="threshold" v-model="curRisk.threshold" disabled="disabled"/>
+            </div>
+            <div class="form-group">
+                <span v-for="cause in allCauses">
+                     <input type="checkbox" class="info" :id="cause" :value="cause" v-model="causes"/>
+                <label :for="cause">{{cause}}</label>
+                </span>
+            </div>
+
+        </form>
+    </div>
+</div>
+
 </body>
+<script src="/js/vue.js"></script>
+<script src="/js/vue-resource.min.js"></script>
+
+<script th:inline="javascript">
+    var riskList = [[${riskList}]];
+    var user = [[${user}]];
+</script>
+<script src="/js/risk_manager.js"></script>
 </html>
