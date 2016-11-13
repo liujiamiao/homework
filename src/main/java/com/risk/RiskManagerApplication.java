@@ -23,7 +23,7 @@ public class RiskManagerApplication {
 	}
 	private static void initData(){
 		UserDao userDao = context.getBean(UserDao.class);
-		if (userDao.findOne(1L).equals(null))
+		if (userDao.findOne(1L) == null)
 			return;
 		initUser();
 		initControl();
