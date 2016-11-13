@@ -59,9 +59,12 @@ public class RiskAction {
 
     @RequestMapping("/modify")
     @ResponseBody
-    public void modify(RiskBean risk){
+    public Map modify(RiskBean risk){
+        HashMap result = new HashMap();
         risk.setTimestamp(System.currentTimeMillis());
         riskDao.save(risk);
+        result.put("riskId",risk.getId());
+        return result;
     }
 
     @RequestMapping("/addCause")

@@ -92,13 +92,14 @@ $("#dialog").dialog({
             vue.$http.post('/risk/modify', vue.curRisk, {emulateJSON: true}).then(function (response) {
                 for (var i = 0; i < vue.causes.length; i++) {
                     vue.$http.post('/risk/addCause', {
-                        riskId: vue.curRisk.id,
+                        riskId: response.data.riskId,
                         cause: vue.causes[i]
-                    }, {emulateJSON: true});
+                    }, {emulateJSON: true}).then(function (res) {
+                        $("#dialog").dialog("close");
+                        vue.causes = [];
+                        window.location.reload();
+                    });
                 }
-                $("#dialog").dialog("close");
-                vue.causes = [];
-                window.location.reload();
             });
         },
         "取消": function () {
