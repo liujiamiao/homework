@@ -53,13 +53,10 @@ var vue = new Vue({
             $("#dialog").dialog("open");
         },
         formatData:function (time) {
-            console.log(time);
             var date=new Date(time);
-            console.log(date);
             var result=date.getFullYear()+"/"+((date.getMonth()+1)>9?(date.getMonth()+1):("0"+(date.getMonth()+1)))+"/"+(date.getDate()>9?date.getDate():("0"+date.getDate()))+" "+
                 (date.getHours()>9?date.getHours():("0"+date.getHours()))+
             ":"+(date.getMinutes()>9?date.getMinutes():("0"+date.getMinutes()))+":"+(date.getSeconds()>9?date.getSeconds():("0"+date.getSeconds()));
-            console.log(result);
             return result;
         },
         check:function (risk) {
@@ -78,6 +75,13 @@ var vue = new Vue({
                 }
             }
             return false;
+        },
+        getControlPoint:function (controlId) {
+            for(var i=0;i<this.controls.length;i++){
+                if(controlId==this.controls[i].controlId){
+                    return this.controls[i].control_point;
+                }
+            }
         }
     }
 });
