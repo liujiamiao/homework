@@ -6,7 +6,7 @@ stage('QA') {
  sh 'sonar-scanner'
 }
  stage('build') {
-  def mvnHome = tool
+  def mvnHome = tool 'M3'
    sh "${mvnHome}/bin/mvn -B clean package"
  }
   stage('deploy') {
