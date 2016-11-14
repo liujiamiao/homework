@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8"/>
     <title>风险管理</title><!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/js/jquery-ui.css"/>
-    <script src="/js/jquery-3.1.1.js"></script>
-    <script src="/js/jquery-ui.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/static/js/jquery-ui.css"/>
+    <script src="/static/js/jquery-3.1.1.js"></script>
+    <script src="/static/js/jquery-ui.js"></script>
 </head>
 <body>
 
@@ -149,12 +149,12 @@
 
 </body>
 
-<script src="/js/vue.js"></script>
-<script src="/js/vue-resource.min.js"></script>
+<script src="/static/js/vue.js"></script>
+<script src="/static/js/vue-resource.min.js"></script>
 
 <script th:inline="javascript">
     var riskList = [[${riskList}]];
     var user = [[${user}]];
 </script>
-<script src="/js/risk_manager.js"></script>
+<script src="/static/js/risk_manager.js"></script>
 </html>
