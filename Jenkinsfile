@@ -12,8 +12,8 @@ stage('QA') {
   stage('deploy') {
    sh "sudo docker stop my || true"
     sh "sudo docker rm my || true"
-     sh "sudo docker run --name my -p 11111:8080 -d tomcat"
-     sh "sudo docker cp target/riskmanager-1.0-SNAPSHOT.war my:/usr/local/tomcat/webapps"
+     sh "sudo docker run --name tomcatweb -p 10086:8080 -d tomcat:8.0"
+     sh "sudo docker cp target/riskmanager-1.0-SNAPSHOT.war tomcatweb:/usr/local/tomcat/webapps/RiskManager.war"
   }
    stage('results') {
  archiveArtifacts artifacts: '**/target/*.war', fingerprint: true
