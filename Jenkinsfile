@@ -1,9 +1,9 @@
 node{
 stage('SCM') {
-git 'https://github.com/liujiamiao/homework.git/'
+git 'https://github.com/liujiamiao/homework.git'
 }
 stage('QA') {
- //sh 'sonar-scanner'
+ sh 'sonar-scanner'
 }
  stage('build') {
   def mvnHome = tool 'M3'
