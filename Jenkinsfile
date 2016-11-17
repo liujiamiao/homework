@@ -10,8 +10,8 @@ stage('QA') {
    sh "${mvnHome}/bin/mvn -B clean package"
  }
   stage('deploy') {
-   sh "sudo docker stop my || true"
-    sh "sudo docker rm my || true"
+   sh "sudo docker stop tomcatweb || true"
+    sh "sudo docker rm tomcatweb || true"
      sh "sudo docker run --name tomcatweb -p 10086:8080 -d tomcat:8.0"
      sh "sudo docker cp target/riskmanager-1.0-SNAPSHOT.war tomcatweb:/usr/local/tomcat/webapps/RiskManager.war"
   }
