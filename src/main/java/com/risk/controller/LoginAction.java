@@ -21,6 +21,7 @@ import java.util.Map;
  * Created by mcs on 2016/11/8.
  */
 @Controller
+@RequestMapping("riskmanager")
 public class LoginAction {
 
     @Autowired

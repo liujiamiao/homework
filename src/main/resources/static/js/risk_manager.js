@@ -13,10 +13,10 @@ var vue = new Vue({
         isCheck:false
     },
     mounted: function () {
-        this.$http.post('/risk/getAllCauses', {emulateJSON: true}).then(function (response) {
+        this.$http.post('/riskmanager/risk/getAllCauses', {emulateJSON: true}).then(function (response) {
             this.allCauses = response.data.causes;
         });
-        this.$http.post('/risk/getAllControls', {emulateJSON: true}).then(function (response) {
+        this.$http.post('/riskmanager/risk/getAllControls', {emulateJSON: true}).then(function (response) {
             this.controls = response.data.controls;
         });
     },
@@ -24,7 +24,7 @@ var vue = new Vue({
         showRisk: function (risk) {
             if(!this.isCheck){
                 this.curRisk = risk;
-                this.$http.post('/risk/getCauses', {id: risk.id}, {emulateJSON: true}).then(function (response) {
+                this.$http.post('/riskmanager/risk/getCauses', {id: risk.id}, {emulateJSON: true}).then(function (response) {
                     this.causes = response.data.causes;
                     if (user.id == risk.submitter_id) {
                         $(".info").removeAttr("disabled");
@@ -61,7 +61,7 @@ var vue = new Vue({
         },
         check:function (risk) {
             this.isCheck=true;
-            this.$http.post('/risk/check', {id: risk.id}, {emulateJSON: true}).then(function (response) {
+            this.$http.post('/riskmanager/risk/check', {id: risk.id}, {emulateJSON: true}).then(function (response) {
                 this.riskList[this.riskList.indexOf(risk)].state=1;
                 this.isCheck=false;
             });
@@ -95,9 +95,9 @@ $("#dialog").dialog({
     buttons: {
         "确定": function () {
             vue.curRisk['submitter_id'] = user.id;
-            vue.$http.post('/risk/modify', vue.curRisk, {emulateJSON: true}).then(function (response) {
+            vue.$http.post('/riskmanager/risk/modify', vue.curRisk, {emulateJSON: true}).then(function (response) {
                 for (var i = 0; i < vue.causes.length; i++) {
-                    vue.$http.post('/risk/addCause', {
+                    vue.$http.post('/riskmanager/risk/addCause', {
                         riskId: response.data.riskId,
                         cause: vue.causes[i]
                     }, {emulateJSON: true}).then(function (res) {

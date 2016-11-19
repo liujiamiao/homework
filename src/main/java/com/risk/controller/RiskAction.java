@@ -22,7 +22,7 @@ import java.util.*;
  * Created by mcs on 2016/11/9.
  */
 @Controller
-@RequestMapping("risk")
+@RequestMapping("riskmanager/risk")
 public class RiskAction {
     @Autowired
     CauseDao causeDao;

@@ -52,7 +52,7 @@
         methods:{
             loginCheck:function () {
                 console.log(this.account);
-                this.$http.post("/loginCheck",{account:this.account,password:this.password},{emulateJSON:true}).then(function (response) {
+                this.$http.post("/riskmanager/loginCheck",{account:this.account,password:this.password},{emulateJSON:true}).then(function (response) {
                     var result=response.data.result;
                     if(result=='success'){
                         alert("success");

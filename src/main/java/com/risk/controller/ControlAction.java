@@ -21,7 +21,7 @@ import java.util.*;
  */
 
 @Controller
-@RequestMapping("control")
+@RequestMapping("riskmanager/control")
 public class ControlAction {
     @Autowired
     CauseDao causeDao;
